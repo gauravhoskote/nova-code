@@ -260,47 +260,6 @@ Read-only tools (file reads, search, web) run automatically. Write and execution
 | `notebook_read`  | Read all cells and outputs from a `.ipynb` notebook                       |
 | `notebook_edit`  | Replace, insert, or delete a cell in a `.ipynb` notebook (0-indexed)      |
 
-### Adding a custom tool
-
-1. Create `src/novacode/tools/my_tool.py`:
-
-```python
-from langchain_core.tools import tool
-from . import register
-
-@tool
-def my_tool(input: str) -> str:
-    """Description the LLM sees when deciding to use this tool."""
-    return f"result: {input}"
-
-register(my_tool)
-```
-
-2. Add the import to `src/novacode/tools/__init__.py`:
-
-```python
-from . import my_tool  # noqa: F401
-```
-
-That's it — the tool is automatically available in every `nova chat` session.
-
-### How tool use looks in the session
-
-```
-You: what files are in this project?
-
-Nova: > list_directory(path=".")
-> → Contents of /Users/you/myproject:
->   DIR   src/
->   DIR   tests/
->  1.2KB  README.md
->   842B  pyproject.toml
-> ... [300 chars]
-
-The project contains a `src/` directory with the main source code,
-a `tests/` directory, and standard config files.
-```
-
 ## Project instructions (NOVA.md)
 
 Nova Code loads custom instructions from `NOVA.md` files at startup:
