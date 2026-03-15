@@ -385,26 +385,33 @@ The chat panel opens in a side column. Nova Code spawns the Python `nova serve` 
 ### Chat panel features
 
 **Header controls:**
-- **Conversations** — load a past session from a quick-pick list
-- **Auto-approve** — toggle automatic tool approval on/off
-- **Thinking** — set extended thinking effort: Off / Auto / Low / Medium / High
+- **Conversations** — opens a quick-pick list of past sessions; the top entry is **+ New Conversation** (clears history and starts fresh); selecting any other entry resumes it and replays all previous messages in the thread
+- **Auto-approve: Off / On** — when On, write and exec tools run without asking; toggles between states visually (highlighted when On)
+- **Thinking** — set extended thinking effort per session: Off / Auto / Low / Medium / High (see [Extended thinking](#extended-thinking))
 
 **Sending messages:**
-- The input box is multi-line and auto-expands
-- If you have text selected in an editor, the selection is automatically included as context
-- The currently open file is always tracked and available as context even when the chat panel has focus
+- The input box is multi-line; press **Enter** to send, **Shift+Enter** for a newline
+- The currently open file is always tracked and automatically injected as context even when the chat panel has focus — Nova can see what file you are editing without you having to mention it
+- If you have text **selected** in an editor when you send, the selected lines are also included as context
+- A **context badge** appears below your message bubble showing which file (and lines, if a selection was made) was attached
+
+**Clickable file paths:**
+- When Nova mentions a file path in its response, it is rendered as a clickable link
+- Clicking it opens the file in the editor column to the left of the chat panel (not inside the chat panel)
 
 **Tool approval:**
-- When auto-approve is off, write/exec tools show an approval dialog with a preview of the arguments
-- `edit_file` and `write_file` show a color-coded diff (red for removed lines, green for added lines) with an expandable "Show all" toggle for large changes
-- On rejection, you can stop the turn, skip that tool, or give an instruction for what to do instead
+- When auto-approve is off, write/exec tools pause and show an approval dialog with a label and a color-coded diff preview
+- `edit_file` and `write_file` show a diff (red = removed lines, green = added lines); `write_file` for a new file shows all lines in green
+- For large diffs a **Show all ↓** toggle appears — click it to expand the full change, click **Collapse ↑** to shrink it back
+- Click **Approve** to let the tool run, or **Reject** to open the rejection prompt
+- In the rejection prompt: press Enter (or click **Stop**) to abort the turn; type `skip` to skip just that tool and continue; or type any instruction to redirect Nova
 
 **Sessions:**
-- Each conversation is saved to `~/.novacode/projects/<cwd-key>/` automatically
-- Use the **Conversations** button to resume any past session
-- **New conversation** clears history and starts fresh
+- Each conversation is saved to `~/.novacode/projects/<cwd-key>/` after every turn automatically
+- Use the **Conversations** button to browse and resume any past session
+- Resumed sessions replay all previous messages so you can see the full prior context
 
-**Stop:** A stop button appears while a turn is running; clicking it cancels LLM generation mid-stream.
+**Stop:** A **Stop** button appears while a turn is running; clicking it cancels generation at the next safe point (tool boundary or next streaming chunk).
 
 ### Output channel
 
