@@ -1,0 +1,2 @@
+[console_scripts]
+nova = novacode.cli:main
