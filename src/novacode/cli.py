@@ -1,5 +1,4 @@
 import click
-from .commands.ask import ask_cmd
 from .commands.chat import chat_cmd
 from .commands.serve import serve_cmd
 
@@ -12,6 +11,5 @@ def main(ctx):
     ctx.ensure_object(dict)
 
 
-main.add_command(ask_cmd)
 main.add_command(chat_cmd)
 main.add_command(serve_cmd)

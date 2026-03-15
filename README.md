@@ -143,42 +143,7 @@ Nova Code uses **`global.amazon.nova-2-lite-v1:0`** (Amazon Nova 2 Lite) via Ama
 
 ```bash
 nova --help
-nova ask --help
 nova chat --help
-```
-
-### `nova ask` — single-shot question
-
-```bash
-nova ask "What is a closure in Python?"
-```
-
-Ask about a file:
-
-```bash
-nova ask --file src/novacode/client.py "Explain what this file does"
-```
-
-Ask about multiple files:
-
-```bash
-nova ask -f main.py -f utils.py "How do these two files interact?"
-```
-
-Pipe input:
-
-```bash
-cat error.log | nova ask "What is causing this error?"
-```
-
-Enable extended thinking:
-
-```bash
-nova ask --thinking medium "What's the best data structure for this use case?" 
-```
-For auto thinking mode:
-```bash
-nova ask --thinking auto --file src/novacode/client.py "Explain what this file does"
 ```
 
 ### `nova chat` — interactive session
@@ -421,7 +386,6 @@ Stderr from the Python process (tracebacks, debug output) appears in **View → 
 
 ```bash
 python -m novacode --help
-python -m novacode ask "Hello"
 python -m novacode chat
 ```
 
@@ -430,9 +394,16 @@ python -m novacode chat
 Extended thinking lets Nova reason through hard problems before answering. It increases latency and token cost but improves accuracy on complex tasks.
 
 ```bash
-nova ask --thinking low   "Summarise this file"
-nova ask --thinking high  "Find all edge cases in this algorithm"
-nova chat --thinking auto  # model decides how much to think
+nova chat --thinking low    # enable with minimum effort
+nova chat --thinking high   # full reasoning depth
+nova chat --thinking auto   # model decides how much to think
+```
+
+Or toggle mid-session with the `/thinking` slash command:
+
+```
+/thinking high
+/thinking off
 ```
 
 In the VS Code extension, use the **Thinking** buttons in the chat header. The setting persists for the duration of the session and can be changed at any time.
