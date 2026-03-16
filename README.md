@@ -1,5 +1,4 @@
-# Nova Code
-
+<h1><img src="novacode.png" width="32" height="32" alt="logo"> Nova Code</h1>
 An AI coding assistant powered by **Amazon Bedrock Nova models**, available as both a Python CLI and a VS Code extension.
 
 ## Requirements
