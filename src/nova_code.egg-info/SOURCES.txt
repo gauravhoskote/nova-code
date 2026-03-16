@@ -12,11 +12,9 @@ src/novacode/cli.py
 src/novacode/client.py
 src/novacode/storage.py
 src/novacode/commands/__init__.py
-src/novacode/commands/ask.py
 src/novacode/commands/chat.py
 src/novacode/commands/serve.py
 src/novacode/core/__init__.py
-src/novacode/core/ask.py
 src/novacode/core/session.py
 src/novacode/core/stdio.py
 src/novacode/tools/__init__.py

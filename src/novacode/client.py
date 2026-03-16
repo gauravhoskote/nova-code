@@ -1,10 +1,15 @@
 import os
 from typing import Iterator, Literal, Optional
 
+from botocore.config import Config
 from langchain_aws import ChatBedrockConverse
 from langchain_core.messages import HumanMessage, SystemMessage
 from langchain_core.chat_history import InMemoryChatMessageHistory
 
+# High thinking can take several minutes before the first byte arrives.
+# boto3's default read timeout is 60s — raise it to 10 minutes to cover all
+# thinking levels without cutting off mid-reasoning.
+_BEDROCK_CONFIG = Config(read_timeout=600, connect_timeout=10)
 MODEL_ID = "global.amazon.nova-2-lite-v1:0"
 
 ThinkingEffort = Literal["low", "medium", "high", "auto"]
@@ -51,6 +56,7 @@ class NovaClient:
             model=self.model_id,
             region_name=self.region,
             # max_tokens=4096,
+             config=_BEDROCK_CONFIG,
         )
         if self.thinking_effort:
             # "auto" = enable thinking at low effort (Bedrock doesn't have an auto tier)
